@@ -5,7 +5,8 @@ from math import sqrt
 class Analyse:
     def __init__(self):
         self.KEYBOARD_ROWS = 3
-        with open("layouts/qwerty.txt", "r") as file:
+        layout_to_test = input("Enter the layout to test: ").lower()
+        with open(f"layouts/{layout_to_test}.txt", "r") as file:
             rows = [[]]
             row_index = 0
             self.name = file.readline().strip("\n")
