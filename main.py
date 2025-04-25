@@ -5,8 +5,8 @@ from math import sqrt
 class Analyse:
     def __init__(self):
         self.KEYBOARD_ROWS = 3
-        layout_to_test = input("Enter the layout to test: ").lower()
-        with open(f"layouts/{layout_to_test}.txt", "r") as file:
+        self.layout_to_test = input("Enter the layout to test: ").lower()
+        with open(f"layouts/{self.layout_to_test}.txt", "r") as file:
             rows = [[]]
             row_index = 0
             self.name = file.readline().strip("\n")
@@ -48,7 +48,12 @@ class Analyse:
                 ".": 0,
                 ",": 0,
                 "/": 0,
-                ";": 0
+                ";": 0,
+                "'": 0,
+                '"': 0,
+                "-": 0,
+                "?": 0,
+                "#": 0
             }
     
     def apply_to_layout(self):
@@ -61,7 +66,7 @@ class Analyse:
     
 
     def show(self):
-        row_names = ["Upper Row", "Home Row", "Lower Row"]
+        row_names = ["Top Row", "Home Row", "Bottom Row"]
         column_names = ["Left Little", "Left Ring", "Left Middle", "Left Index", "Left Index", 
         "Right Index", "Right Index", "Right Middle", "Right Ring", "Right Little"]
         fig, ax = plt.subplots()
@@ -86,8 +91,12 @@ class Analyse:
                 ax.text(j, i, self.layout[i, j],
                         ha="center", va="center", color=text_color)
 
+        cbar = plt.colorbar(im, ax=ax, location="bottom", pad=0.2, label="Character Frequency", ticks=[0, 0.1249])
+        cbar.ax.set_xticklabels(["Low", "High"])
+
         ax.set_title(self.name)
         fig.tight_layout()
+        plt.savefig(f"{self.layout_to_test}.png", bbox_inches="tight", pad_inches=0.25)
         plt.show()
 
 
